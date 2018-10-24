@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>婚活サイト</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css}"/>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>婚活サイト</h1>
+    <form th:action="@{/createUser}" th:object="${registerUserForm}" class="form-signin"  enctype="multipart/form-data" method="post" ><!-- th:actionでformタグのaction属性の内容を置換できる -->
+    <!-- action:フォームの送信ボタンを押して送信されるデータの送信先を指定する -->
+    <!-- th:actionでコンテキストパスを絶対パスに置換できる -->
+        <h2 class="form-signin-heading">ユーザー登録フォーム</h2>
+        <h3>入力してください</h3>
+
+        <div th:if="${param.error}" class="alert alert-danger">
+            ユーザー名またはパスワードが正しくありません。
+        </div>
+        <input type="email" class="form-control" name="mail" placeholder="メールアドレス" required="required"
+               autofocus="autofocus"/>
+        <input type="password" class="form-control" name="pass" placeholder="パスワード" required="required"/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登録する</button>
+    </form>
+</div>
+</body>
+</html>

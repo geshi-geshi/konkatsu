@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>婚活サイト</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css}"/>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>ようこそ！！婚活サイトへ！！</h1>
+    <form class="form-signin" method="post" th:action="@{/login}"><!-- th:actionでコンテキストパスを絶対パスに置換できる -->
+        <h2 class="form-signin-heading">ログインしてください</h2>
+
+        <div th:if="${param.error}" class="alert alert-danger"><!-- 認証エラーが発生した場合にloginForm?errorに遷移するように設定した為[error]パラメータが設定されている場合にエラーメッセージを表示するようにする -->
+            メールアドレスまたはパスワードが正しくありません。
+        </div>
+        <input type="text" class="form-control" name="mail" placeholder="メールアドレス" required="required"
+               autofocus="autofocus"/>
+        <input type="password" class="form-control" name="pass" placeholder="パスワード" required="required"/>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
+        </form>
+        <form  th:action="@{/RegisterUserForm}" method="get"><!-- th:action@{/RegisterUserForm}でhttp://localhost:8080/RegisterUserForm -->
+    	<input type="submit" class="btn btn-lg btn-primary btn-block"  value="ユーザー登録"/>
+    	</form>
+</div>
+</body>
+</html>
+

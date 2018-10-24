@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>プロフィール登録</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css}"/>
+</head>
+
+<body>
+
+<div class="container">
+    <form class="form-signin" method="post" th:action="@{/loginForm}"><!-- th:actionでコンテキストパスを絶対パスに置換できる -->
+        <h2 class="form-signin-heading">プロフィール登録が完了しました！</h2>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">マイページ</button>
+
+    </form>
+</div>
+</body>
+</html>

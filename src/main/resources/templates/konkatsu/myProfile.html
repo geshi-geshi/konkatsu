@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>婚活サイト</title>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css}" />
+</head>
+
+<body th:with="user=${#authentication.principal.user}">
+	<!-- authenticationで認証ユーザー情報にアクセスできる 、principalプロパティでUserDetailsオブジェクトにアクセスできるので、user.mailでログインユーザー名が分かる-->
+
+	<h2>
+		<span th:text="${user.mail}">メアド</span> さん、Myプロフィール
+	</h2>
+
+
+	<table class="table table-striped table-bordered table-condensed">
+
+		<tr>
+			<th>写真</th>
+			<th>名前</th>
+			<th>性別</th>
+			<th>誕生日</th>
+			<th>身長(cm)</th>
+			<th>職業</th>
+			<th>年収(万円)</th>
+			<th>メールアドレス</th>
+			<th>自己紹介</th>
+		</tr>
+
+		<tr>
+			<!-- エンコードした画像の表示 -->
+			<td><img th:src="${'data:image/png;base64,' + profile.image}"
+				width="250" height="150" /></td>
+			<td th:text="${profile.name}">山田</td>
+			<td th:text="${profile.gender}">男</td>
+			<td th:text="${profile.birthday}">誕生日</td>
+			<td th:text="${profile.height}">170</td>
+			<td th:text="${profile.occupationName}">職業</td>
+			<td th:text="${profile.income}">年収</td>
+			<td th:text="${profile.mail}">メール</td>
+			<!-- 「profile」オブジェクトがもつ「user」の「mail」を表示 -->
+			<td th:text="${profile.text}">自己紹介</td>
+
+		</tr>
+	</table>
+
+	<h3>＜ユーザーを探す＞</h3>
+	<h3>キーワード検索</h3>
+	<form th:action="@{/konkatsu/searchProfiles}" method="get">
+		<input type="text" name="searchName" class="form-control" /> <input
+			type="hidden" name="genderId" th:value="${profile.genderId}" />
+		<button type="submit" class="btn btn-lg btn-primary btn-block">検索する</button>
+	</form>
+
+	<form th:action="@{/konkatsu/usersList}" method="get">
+		<input type="hidden" name="genderId" th:value="${profile.genderId}" />
+		<button type="submit" class="btn btn-lg btn-primary btn-block">登録ユーザー一覧を見る</button>
+	</form>
+
+	<form th:action="@{/konkatsu/favoriteList}" method="get">
+		<input type="hidden" name="userId" th:value="${user.userId}" />
+		<button type="submit" class="btn btn-lg btn-primary btn-block">お気に入り一覧を見る</button>
+	</form>
+
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" class="btn btn-lg btn-primary btn-block"
+			value="ログアウト" />
+	</form>
+
+</body>
+</html>
+

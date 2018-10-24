@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> <!-- ThymeleafのSpring Security連携機能の名前空間を設定 -->
+<head>
+    <meta charset="utf-8"/>
+    <title>婚活サイト</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css}"/>
+</head>
+
+<body th:with="user=${#authentication.principal.user}"> <!-- ログインユーザー情報を取得 -->
+
+<div class="container">
+
+	<h2>
+    	<span sec:authentication="principal.user.mail">メアド</span>
+    	<!-- sec:authenticationで認証ユーザー情報にアクセスできる 、principalプロパティでUserDetailsオブジェクトにアクセスできるので、principal.user.mailでログインユーザー名が分かる-->
+	  	さん、ログイン中
+    </h2>
+
+    <form th:action="@{/logout}" method="post">
+    <input type="submit" class="btn btn-default btn-xs" value="ログアウト" />
+    </form>
+
+    <form th:action="@{/konkatsu/createProfile}" th:object="${profileForm}" class="form-signin"  enctype="multipart/form-data" method="post" >
+    <!-- enctype="multipart/form-data"でアップロードされたファイルをサーバー側に送信することができる -->
+    <!-- th:actionでformタグのaction属性の内容を置換できる -->
+    <!-- action:フォームの送信ボタンを押して送信されるデータの送信先URLを指定する -->
+    <!-- th:object="${profileForm}":profileFormクラスの${user.name}などを*{name}と書け簡略化できる -->
+
+  	<!--   部品がテキストフィールドなら初期値として入力欄に表示されます。テキストが書き換えられればそれが value値になり、name属性とセットで送信されます。
+	また、ラジオボタンやチェックボックスでは、選択された値の名称となり、name"src/main/resources/templates/konkatsu/profileForm.html"属性とセットで送信されます。
+	送信やリセットボタンなどの場合はボタン上に表示されます-->
+
+        <h2 class="form-signin-heading">Myプロフィールフォーム</h2>
+
+        <div th:if="${param.error}" class="alert alert-danger">
+            正しく入力してください。
+        </div>
+				<!-- ログインユーザーIDを送る -->
+		<input type="hidden" name="id" th:value="${user.userId}" />
+
+        <div class="form-group" >
+		<label>氏名</label>
+
+		<!-- プログラムに送信するデータに名前を付けるのがname属性 -->
+		 <input type="text" class="form-control" name="name" placeholder="(例) 山田太郎" required="required"
+               autofocus="autofocus"/>
+		</div>
+
+		<div class="form-group">
+		<label>性別</label>
+	    <select class="form-control" name="genderId" >
+		<option value="1">男</option>
+		<option value="2">女</option>
+		</select>
+		</div>
+
+		<div class="form-group">
+		<label>生年月日</label>
+		<input type="text" class="form-control" name="birthday" placeholder="(例) 2017-01-01" required="required"/>
+		</div>
+
+		<div class="form-group">
+		<label>身長(cm)</label>
+		<input type="text" class="form-control" name="height" placeholder="(例)180" required="required"/>
+		</div>
+
+		<div class="form-group">
+		<label>職業</label>
+	    <select class="form-control" name="occupationId" >
+	<!--  	<option value='' disabled selected style='display:none;'>職業</option> -->
+		<option value="1">公務員系</option>
+		<option value="2">医療・介護・福祉系</option>
+		<option value="3">教育系</option>
+		<option value="4">金融系</option>
+		<option value="5">IT・電気・電子系</option>
+		<option value="6">製造・建築・土木系</option>
+		<option value="7">アート・デザイン系</option>
+		<option value="8">音楽・イベント系</option>
+		<option value="9">芸能・マスコミ系</option>
+		<option value="10">サービス系</option>
+		<option value="11">飲食系</option>
+		<option value="12">ファッション・美容系</option>
+		<option value="13">スポーツ・インストラクター系</option>
+		<option value="14">自営業</option>
+		<option value="15">その他</option>
+		</select>
+		</div>
+
+		<div class="form-group">
+		<label>年収(万円)</label>
+	    <input type="number" class="form-control" name="income" placeholder="(例)600" required="required"/>
+		</div>
+
+		<div class="form-group">
+		<label for="InputTextarea">自己紹介文</label>
+		<textarea class="form-control" name="text" rows="6" placeholder="自己PRをしてください"></textarea>
+		</div>
+
+		<div class="form-group">
+		<label>プロフィール画像</label>
+	    <input type="file" class="form-control" name="file" placeholder="写真" required="required"/>
+		</div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登録する</button>
+
+         <!--  <input type="hidden" name="id" th:value="${profile.user.userId}"/> -->
+    </form>
+
+
+
+</div>
+
+
+</body>
+</html>

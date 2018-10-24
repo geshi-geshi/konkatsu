@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>ユーザー登録</title>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css}" />
+</head>
+
+<body th:with="user=${#authentication.principal.user}">
+	<!-- ログインユーザー情報を取得 -->
+
+	<div class="container">
+		<h2 class="form-signin-heading">お気に入りを解除しました</h2>
+
+		<form th:action="@{/konkatsu/myProfile}" method="get">
+			<input type="hidden" name="id" th:value="${user.userId}" />
+			<button type="submit" class="btn btn-lg btn-primary btn-block">Myページへ</button>
+		</form>
+
+	</div>
+</body>
+</html>
